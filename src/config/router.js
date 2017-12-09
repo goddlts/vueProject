@@ -23,6 +23,8 @@ import video from '../components/Home/video/video.vue';
 
 // 新闻详情
 import newsDetail from '../components/Home/News/detail.vue';
+// 图片详情
+import shareDetail from '../components/Home/Share/detail.vue';
 
 // 2 创建路由对象
 let router = new VueRouter({
@@ -41,7 +43,8 @@ let router = new VueRouter({
     {path: '/share', component: share},
     {path: '/video', component: video},
 
-    {name: 'newsDetail', path: '/news/:id', component: newsDetail, props: true}
+    {name: 'newsDetail', path: '/news/:id', component: newsDetail, props: true},
+    {name: 'shareDetail', path: '/share/:id', component: shareDetail, props: true}
   ]
 });
 

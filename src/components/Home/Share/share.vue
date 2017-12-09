@@ -14,13 +14,13 @@
     <div class="images">
       <ul>
           <li v-for="item in images" :key="item.id">
-              <a href="#">
+              <router-link :to="{name: 'shareDetail', params: {id: item.id}}">
                   <img :src="item.img_url" alt="">
                   <p class="cover">
                       <span>{{item.title}}</span><br>
                       {{item.zhaiyao}}
                   </p>
-              </a>
+              </router-link>
           </li>
           
       </ul>
