@@ -49,15 +49,16 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// 因为mint-ui已经全局引用，所以按需引用 不需要
+// import Vue from 'vue';
 
-// 引入mint-ui中的组件   按需引用
-import { Swipe, SwipeItem } from 'mint-ui';
-// 引用mint-ui的样式
-import 'mint-ui/lib/style.css';
+// // 引入mint-ui中的组件   按需引用
+// import { Swipe, SwipeItem } from 'mint-ui';
+// // 引用mint-ui的样式
+// import 'mint-ui/lib/style.css';
 
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
+// Vue.component(Swipe.name, Swipe);
+// Vue.component(SwipeItem.name, SwipeItem);
 
 
 export default {

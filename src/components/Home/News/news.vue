@@ -25,6 +25,8 @@ export default {
     }
   },
   created() {
+    // 提示正在加载
+    // this.$indicator.open('正在加载...');
     this.getnews();
   },
   methods: {
@@ -37,9 +39,12 @@ export default {
           } else {
             console.log('服务器内部错误');
           }
+          // 关闭加载提示
+          this.$indicator.close();
         })
         .catch((err) => {
           console.error(err);
+          // this.$indicator.close();
         })
     }
   }

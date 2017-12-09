@@ -51,8 +51,10 @@
 <script>
   import '../../../../statics/css/style.css';
   
+
+  // 因为已经全局引用
   // mint-ui的样式已经在home.vue中加载
-  import { Toast } from 'mint-ui';
+  // import { Toast } from 'mint-ui';
 
 
   export default {
@@ -103,7 +105,8 @@
       send() {
         // 如果文本框没有输入内容，不允许评论
         if (this.content.length === 0) {
-          Toast('请输入内容');
+          // Toast('请输入内容');
+          this.$toast('请输入内容11');
           return;
         }
 
@@ -140,7 +143,7 @@
             } else {
               // 评论失败
             }
-            Toast(response.data.message);
+            this.$toast(response.data.message);
           })
           .catch((err) => {
             console.error(err);
