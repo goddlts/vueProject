@@ -1,25 +1,7 @@
 <template>
   <div class="mui-content">
     <!-- 轮播图 -->
-
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="(item, index) in images" :key="index">
-        <a :href="item.url">
-          <img :src="item.img" alt="">
-        </a>
-      </mt-swipe-item>
-      <!-- <mt-swipe-item>
-        <a href="#">
-          <img src="../../../statics/images/shuijiao.jpg" alt="">
-        </a>
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <a href="#">
-          <img src="../../../statics/images/shuijiao.jpg" alt="">
-        </a>
-      </mt-swipe-item> -->
-    </mt-swipe>
-
+    <wodeswipe :imgUrl="img_url"></wodeswipe>
     <!-- 9宫格 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li v-for="item in menus" :key="item.url" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -28,67 +10,25 @@
           <div class="mui-media-body">{{item.title}}</div>
         </router-link>
       </li>
-      <!-- <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-              <span class="mui-icon icon-share"></span>
-              <div class="mui-media-body">图片分享</div></a></li>
-      <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-              <span class="mui-icon icon-buy"></span>
-              <div class="mui-media-body">商品购买</div></a></li>
-      <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-              <span class="mui-icon icon-feedback"></span>
-              <div class="mui-media-body">留言反馈</div></a></li>
-      <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-              <span class="mui-icon icon-video"></span>
-              <div class="mui-media-body">视频专区</div></a></li>
-      <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-              <span class="mui-icon icon-contact"></span>
-              <div class="mui-media-body">联系我们</div></a></li> -->
-      
   </ul> 
   </div>
 </template>
 
 <script>
-// 因为mint-ui已经全局引用，所以按需引用 不需要
-// import Vue from 'vue';
-
-// // 引入mint-ui中的组件   按需引用
-// import { Swipe, SwipeItem } from 'mint-ui';
-// // 引用mint-ui的样式
-// import 'mint-ui/lib/style.css';
-
-// Vue.component(Swipe.name, Swipe);
-// Vue.component(SwipeItem.name, SwipeItem);
-
+// 导入轮播图的组件
+import swipe from '../Common/swipe.vue';
 
 export default {
   data() {
     return {
-      images: [],
-      menus: []
+      menus: [],
+      img_url: 'getlunbo'
     };
   },
   created() {
-    this.getlunbo();
     this.getmenus();
   },
   methods: {
-    // 获取轮播图数据
-    getlunbo() {
-      this.$http
-        .get('getlunbo')
-        .then((response) => {
-          if (response.status === 200 && response.data.status === 0) {
-            this.images = response.data.message;
-          } else {
-            console.log('请求服务器出错');
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        })
-      
-    },
     // 获取9宫格数据
     getmenus() {
       this.$http
@@ -104,19 +44,16 @@ export default {
           console.error(err);
         })
     }
+  },
+  components: {
+    // swipe: swipe
+    wodeswipe: swipe
   }
 };
 </script>
 
 <style scoped>
-  /* 轮播图样式 */
-  .mint-swipe {
-    height: 250px;
-  }
-  .mint-swipe img {
-    width: 100%;
-    height: 100%;
-  }
+  
 
   /* 9宫格的样式 */
   .icon-news {
