@@ -50,6 +50,7 @@
 
 <script>
 import Vue from 'vue';
+
 // 引入mint-ui中的组件   按需引用
 import { Swipe, SwipeItem } from 'mint-ui';
 // 引用mint-ui的样式

@@ -16,8 +16,8 @@
         <h4>提交评论</h4>
 
         <div class="submitcomment">
-            <textarea placeholder="请输入评论内容"></textarea>
-            <button class="mui-btn mui-btn-primary">发表</button>
+            <textarea v-model="content" placeholder="请输入评论内容"></textarea>
+            <button @click="send" class="mui-btn mui-btn-primary">发表</button>
         </div>
             
         <div class="title">
@@ -39,9 +39,8 @@
               </span>
             </div>
         </div>
-
         <div class="more">
-            <button class="mui-btn mui-btn-primary mui-btn-outlined">加载更多</button>
+            <button @click="loadmore" class="mui-btn mui-btn-primary mui-btn-outlined">加载更多</button>
         </div>
 
     </div>
@@ -50,13 +49,19 @@
 
 
 <script>
-  import '../../../../statics/css/style.css'
+  import '../../../../statics/css/style.css';
+  
+  // mint-ui的样式已经在home.vue中加载
+  import { Toast } from 'mint-ui';
+
 
   export default {
     data() {
       return {
         news: {},
-        comments: []
+        comments: [],
+        content: '',  // 文本框绑定的属性
+        pageindex: 1
       }
     },
     props: ['id'],
@@ -79,12 +84,13 @@
       },
       // 根据id获取新闻对应的评论
       getcomments() {
-        let url = 'getcomments/'+ this.id +'?pageindex=1';
+        let url = 'getcomments/'+ this.id +'?pageindex=' + this.pageindex;
         this.$http
           .get(url)
           .then((response) => {
              if (response.status === 200 && response.data.status === 0) {
-               this.comments = response.data.message;
+               //concat 连接两个数组，并返回一个新的数组
+               this.comments = this.comments.concat(response.data.message);
              } else {
                console.log('服务器内部错误');
              }
@@ -92,6 +98,58 @@
           .catch((err) => {
             console.error(err);
           })
+      },
+      // 发表评论
+      send() {
+        // 如果文本框没有输入内容，不允许评论
+        if (this.content.length === 0) {
+          Toast('请输入内容');
+          return;
+        }
+
+        // cors请求分为两种
+        // 1 简单的cors请求
+          // get/post/head
+          
+        // 2 非简单的cors请求
+        // post请求  如果content-type 是 application/json 或者 form-data 是非简单的cors请求
+        // 非简单的cors请求，会先发送一个预检请求，请求类型是options，请求服务器允许的Access-Control-Allow-Headers 有没有content-type
+
+        // axios 
+        // post请求，如果传递的是对象{content: '123'}，此时会自动设置content-type为application/json
+
+        // post请求，如果传递的是字符串'content=1123', 此时会自动设置content-type为application/x-www-form-urlencoded
+        let url = 'postcomment/' + this.id;
+        this.axios
+          .post(url, 'content=' + this.content)
+          .then((response) => {
+            if (response.status === 200 && response.data.status === 0) {
+              // 评论成功
+
+              // 刷新列表
+              // this.getcomments();
+              // 把当前评论数据，显示在列表最上面
+              this.comments.unshift({
+                user_name: '匿名用户',
+                add_time: new Date(),
+                content: this.content
+              })
+
+              // 清空文本框
+              this.content = '';
+            } else {
+              // 评论失败
+            }
+            Toast(response.data.message);
+          })
+          .catch((err) => {
+            console.error(err);
+          })
+
+      },
+      loadmore() {
+        this.pageindex++;
+        this.getcomments();
       }
     }
   }

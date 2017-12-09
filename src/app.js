@@ -10,6 +10,7 @@ import moment from 'moment';
 // 过滤器，格式化日期
 Vue.filter('fmtdate', (date, fmrStr) => {
   return moment(date).format(fmrStr);
+
 })
 
 
@@ -31,6 +32,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:8899/api/';
 
 // 让所有的vue的实例都共享axios
 Vue.prototype.$http = axios;
+Vue.prototype.axios = axios;
+
 
 // 1 引用组件
 import home from './components/Home/home.vue';
