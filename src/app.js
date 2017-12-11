@@ -17,6 +17,9 @@ let vm = new Vue({
   el: '#app',
   router,
   render: c => c(app),
+  // render: function (createElement) {
+  //   return createElement(app);
+  // },
   created() {
     // 设置axios的拦截器
     // 发送请求之前

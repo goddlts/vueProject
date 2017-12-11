@@ -88,7 +88,8 @@
         // post请求，如果传递的是字符串'content=1123', 此时会自动设置content-type为application/x-www-form-urlencoded
         let url = 'postcomment/' + this.id;
         this.axios
-          .post(url, 'content=' + this.content)
+          // .post(url, 'content=' + this.content)
+          .post(url, {content: this.content})
           .then((response) => {
             if (response.status === 200 && response.data.status === 0) {
               // 评论成功

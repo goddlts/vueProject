@@ -40,20 +40,20 @@
 			goback() {
 				this.$router.back();
 			},
-			judgeBack(path) {
-				let arr = ['/home', '/member', '/shopcar', '/search'];
-				if (arr.indexOf(path) == -1) {
-					// 不存在
-					this.isShow = true;
-				} else {
-					this.isShow = false;
-				}
+			judgeBack() {
+				
 			}
 		},
 
 		// 当刷新页面的时候，因为路由地址没有发生变化，没有执行watch，所以要在组件创建完毕后，判断是否显示后退按钮
 		created() {
-			this.judgeBack(this.$route.path);
+			let arr = ['/home', '/member', '/shopcar', '/search'];
+			if (arr.indexOf(this.$route.path) == -1) {
+				// 不存在
+				this.isShow = true;
+			} else {
+				this.isShow = false;
+			}
 		},
 		// 当路由地址变化的时候。决定后退按钮显示或者隐藏
 		// $router  路由对象  
@@ -61,7 +61,15 @@
 		watch: {
 			'$route': function (newValue) {
 				// 判断当前的路由地址 是否是  /home  /member /shopcar /search
-				this.judgeBack(newValue.path);
+				// console.log(newValue);
+				let arr = ['/home', '/member', '/shopcar', '/search'];
+				if (arr.indexOf(newValue.path) == -1) {
+					// 不存在
+					this.isShow = true;
+				} else {
+					this.isShow = false;
+				}
+
 			}
 		}
   }

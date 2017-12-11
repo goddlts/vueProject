@@ -31,10 +31,10 @@ let router = new VueRouter({
   linkActiveClass: 'mui-active',
   routes: [
     {path: '/', redirect: '/home'},
-    {path: '/home', component: home},
-    {path: '/member', component: member},
-    {path: '/shopcar', component: shopcar},
-    {path: '/search', component: search},
+    {path: '/home', meta: { title: '首页'},  component: home},
+    {path: '/member', meta: { title: '会员中心'}, component: member},
+    {path: '/shopcar', meta: { title: '购物车'}, component: shopcar},
+    {path: '/search', meta: { title: '搜索'}, component: search},
 
     {path: '/news', component: news},
     {path: '/buy', component: buy},
@@ -47,6 +47,15 @@ let router = new VueRouter({
     {name: 'shareDetail', path: '/share/:id', component: shareDetail, props: true}
   ]
 });
+
+// 路由跳转之后执行
+router.afterEach((to, from) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  } else {
+    document.title = '默认值';
+  }
+})
 
 // 导出路由对象
 export default router;

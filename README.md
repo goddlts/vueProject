@@ -92,3 +92,13 @@ created() {
 ## 图片分享
 
 ## 图片分享详情
+
+- vue-preview
+
+https://github.com/LS1231/vue-preview
+
+## 非简单cors请求
+
+Content-Type -- url-encoded  发送数据的格式  "key=value&key1=value1"
+Content-Type -- application/json 发送数据的格式  "{ key: value, key1: value1 }"
+
