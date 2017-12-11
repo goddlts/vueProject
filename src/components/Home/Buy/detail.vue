@@ -2,50 +2,111 @@
     <div class="mui-content">
         <div class="detail">
             <div class="top">
-              <img src="http://127.0.0.1:8899/upload/201504/20/thumb_201504200046594439.jpg" alt="">
+              <!-- 轮播图 -->
+              <swipe :imgUrl="imgUrl"></swipe>
             </div>
         </div>
         <div class="sell">
-            <h4>荣耀 手机</h4>
+            <h4>{{ goods.title }}</h4>
             <div class="price">
-                市场价：<s>￥2222</s> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 销售价：<span>￥1111</span>
+                市场价：<s>￥{{ goods.market_price }}</s> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 销售价：<span>￥{{ goods.sell_price }}</span>
             </div>
             <div class="num">
-                购买数量：xxx
-                <div class="ball"></div>
+                购买数量：<number @numberchange="numberchanged" :stock="goods.stock_quantity"></number>
+                <div v-if="false" class="ball"></div>
             </div>
             <div class="button">
                 <button class="mui-btn mui-btn-primary">立刻购买</button>
-                <button class="mui-btn mui-btn-danger">加入购物车</button>
+                <button @click="addcart" class="mui-btn mui-btn-danger">加入购物车</button>
             </div>
         </div>
 
         <div class="param">
             <h5>商品参数</h5>
             <div class="info">
-                <p>商品编号：xxxx</p>
-                <p>库存情况：60件</p>
-                <p>上架时间：2016-10-10 00:00:00</p>
+                <p>商品编号：{{ goods.goods_no }}</p>
+                <p>库存情况：{{ goods.stock_quantity }}件</p>
+                <p>上架时间：{{ goods.add_time | fmtdate("YYYY-MM-DD HH:mm:ss") }}</p>
             </div>
         </div>
         
         <div class="footer">
             <a class="mui-btn mui-btn-primary mui-btn-outlined">图文介绍</a>
-            <a class="mui-btn mui-btn-danger mui-btn-outlined">商品评论</a>
+            <a @click="push" class="mui-btn mui-btn-danger mui-btn-outlined">商品评论</a>
         </div>
     </div>
 </template>
 
 <script>
- 
-    //导出组件
-    export default {
-        data() {
-            return {
+// 导入轮播图组件
+import swipe from '../../Common/swipe.vue';
 
+// 导入number组件
+import number from '../../Common/number.vue';
+
+// 导入通信用的模块
+import vueObj from '../../../config/communication';
+
+//导出组件
+export default {
+  components: {
+    swipe,
+    number
+  },
+  props: ['id'],
+  data() {
+      return {
+        imgUrl: 'getthumimages/' + this.id,
+        goods: {},
+        count: 1
+      }
+  },
+  created() {
+    this.getgoods();
+  },
+  methods: {
+    // 获取商品详情
+    getgoods() {
+      let url = 'goods/getinfo/' + this.id;
+      this.axios
+        .get(url)
+        .then((res) => {
+          if (res.status === 200 && res.data.status === 0) {
+            if (res.data.message.length === 0) {
+              return;
             }
-        } 
+            this.goods = res.data.message[0]
+          } else {
+            console.log('服务器内部错误');
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+    },
+    push() {
+      // 点击商品评论，跳转到评论组件
+      this.$router.push({name: 'buyComment', params: {id: this.id}})
+    },
+    // number组件中的数字发生变化后会调用
+    numberchanged(count) {
+      // console.log(count);
+      this.count = count;
+    },
+    // 点击加入购物车
+    addcart() {
+      // 1 获取到number组件中值
+      // this.count
+      // 2 更新底部的badge
+      // 2.1 点击加入购物车，要把count传递到app.vue
+      vueObj.$emit('updateBadge', this.count);
+      // 2.2 更新
+
+      // 3 小球动画
+      // 4 保存购物车的数据到本地存储
     }
+  }
+}
 </script>
 
 <style scoped>

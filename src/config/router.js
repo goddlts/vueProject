@@ -25,6 +25,11 @@ import video from '../components/Home/video/video.vue';
 import newsDetail from '../components/Home/News/detail.vue';
 // 图片详情
 import shareDetail from '../components/Home/Share/detail.vue';
+// 商品详情
+import buyDetail from '../components/Home/Buy/detail.vue';
+
+// 商品评论
+import buyComment from '../components/Home/Buy/comment.vue';
 
 // 2 创建路由对象
 let router = new VueRouter({
@@ -44,7 +49,9 @@ let router = new VueRouter({
     {path: '/video', component: video},
 
     {name: 'newsDetail', path: '/news/:id', component: newsDetail, props: true},
-    {name: 'shareDetail', path: '/share/:id', component: shareDetail, props: true}
+    {name: 'shareDetail', path: '/share/:id', component: shareDetail, props: true},
+    {name: 'buyDetail', path: '/buy/:id', component: buyDetail, props: true},
+    {name: 'buyComment', path: '/buy/comment/:id', component: buyComment, props: true}
   ]
 });
 

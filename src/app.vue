@@ -15,7 +15,7 @@
 				<span class="mui-tab-label">会员</span>
 			</router-link>
 			<router-link class="mui-tab-item" to="/shopcar">
-				<span class="mui-icon mui-icon-contact"><span class="mui-badge">9</span></span>
+				<span class="mui-icon mui-icon-contact"><span class="mui-badge">0</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="mui-tab-item" to="/search">
@@ -23,6 +23,8 @@
 				<span class="mui-tab-label">搜索</span>
 			</router-link>
 		</nav>
+
+<!-- event bus -->
     
     <router-view></router-view>
   </div>
@@ -30,6 +32,9 @@
 </template>
 
 <script>
+	// 导入通信用的模块
+	import vueObj from './config/communication';
+
   export default {
     data() {
       return {
@@ -54,6 +59,11 @@
 		// 当刷新页面的时候，因为路由地址没有发生变化，没有执行watch，所以要在组件创建完毕后，判断是否显示后退按钮
 		created() {
 			this.judgeBack(this.$route.path);
+
+			// 当组件创建完毕，监听vueObj的 updateBadge事件
+			vueObj.$on('updateBadge', function (count) {
+				console.log(count);
+			})
 		},
 		// 当路由地址变化的时候。决定后退按钮显示或者隐藏
 		// $router  路由对象  

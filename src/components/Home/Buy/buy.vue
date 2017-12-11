@@ -3,10 +3,10 @@
         <mt-loadmore :autoFill="false" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @bottom-status-change="statusChange" ref="loadmore">
             <ul class="mui-table-view mui-grid-view">
                 <li v-for="item in goodslist" :key="item.id" class="mui-table-view-cell mui-media mui-col-xs-6">
-                    <a href="">
+                    <router-link v-bind="{to: '/buy/' + item.id}">
                         <img class="mui-media-object" :src="item.img_url">
                         <div class="mui-media-body">{{ item.title }}</div>
-                    </a>
+                    </router-link>
                     <div class="bottom">
                         <h6>
                             <span>￥{{ item.sell_price }}</span>
