@@ -14,7 +14,7 @@ module.exports = {
     rules: [
       {
         test: /vue-preview.src.*?js$/,
-        loader: 'babel'
+        use: 'babel-loader'
       },
       {
         test: /\.js$/,

@@ -51,7 +51,7 @@
 			if (arr.indexOf(this.$route.path) == -1) {
 				// 不存在
 				this.isShow = true;
-			} else {
+			} else { 
 				this.isShow = false;
 			}
 		},

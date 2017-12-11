@@ -102,3 +102,12 @@ https://github.com/LS1231/vue-preview
 Content-Type -- url-encoded  发送数据的格式  "key=value&key1=value1"
 Content-Type -- application/json 发送数据的格式  "{ key: value, key1: value1 }"
 
+## 全局设置后退按钮
+
+## 全局设置标题
+
+## 商品列表
+
+## 商品列表的上拉更新
+
+http://mint-ui.github.io/docs/#/zh-cn2/loadmore
